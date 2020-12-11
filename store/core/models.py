@@ -1,5 +1,7 @@
 from djongo import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.conf import settings
+
 
 class UserManager(BaseUserManager):
 
@@ -35,3 +37,17 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+
+class Stores(models.Model):
+    """Collections of the all store info"""
+    store_id = models.AutoField(primary_key=True)
+    store_name = models.CharField(max_length=255)
+    store_type = models.CharField(max_length=255)
+    store_owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.store_name
