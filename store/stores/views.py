@@ -7,7 +7,7 @@ from core.models import Stores
 from stores import serializers
 
 
-class StoresViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class StoresViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     """Manage stores in database"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -16,4 +16,8 @@ class StoresViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def get_queryset(self):
         """Return objects for the current authenticated user only"""
-        return self.queryset.filter(store_owner=self.request.user).order_by('-store_name')
+        return self.queryset.filter().order_by('-store_name')
+
+    def perform_create(self, serializer):
+        """Create a new store"""
+        serializer.save(store_owner= self.request.user)

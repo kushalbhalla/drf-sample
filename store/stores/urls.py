@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from stores import views
 
 router = DefaultRouter()
-router.register('store_list', views.StoresViewSet)
+router.register('stores', views.StoresViewSet)
 
-app = 'stores'
+app_name = 'stores'
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

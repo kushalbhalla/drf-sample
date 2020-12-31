@@ -6,6 +6,6 @@ class StoresSerializer(serializers.ModelSerializer):
     """Serializer for stores objects"""
 
     class Meta:
-        models = Stores
+        model = Stores
         fields = '__all__'
         read_only_fields = ('store_id',)

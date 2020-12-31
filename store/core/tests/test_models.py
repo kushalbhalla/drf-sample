@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
+from core import models
 
 def sample_user(email='test@london.com', password='testpass'):
     """Create a sample user"""
@@ -43,3 +44,25 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_store_name_str(self):
+        """Test the store must be a string """
+        store = models.Stores.objects.create(
+            store_owner=sample_user(),
+            store_name='Toy Shop',
+            store_type='playing area',
+
+        )
+
+        self.assertEqual(str(store), store.store_name)
+
+    def test_product_str(self):
+        """Test the recipe string representation"""
+        products = models.Products.objects.create(
+            product_name="Cricket Bat",
+            product_price=45.90,
+            product_dis="It is a cricket Bat made ny nike",
+            product_quantity=45
+        )
+
+        self.assertEqual(str(products), products.product_name)

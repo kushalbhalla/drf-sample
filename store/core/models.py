@@ -51,3 +51,14 @@ class Stores(models.Model):
 
     def __str__(self):
         return self.store_name
+
+class Products(models.Model):
+    """StoreInfo show as detailed info about each store"""
+    store_id = models.OneToOneField('Stores', primary_key=True, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=255)
+    product_price = models.FloatField(max_length=10)
+    product_dis = models.TextField(max_length=400)
+    product_quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.product_name
