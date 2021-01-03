@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
     """Custom user model that support using email instead of username"""
     username = None
     email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -52,13 +52,27 @@ class Stores(models.Model):
     def __str__(self):
         return self.store_name
 
+
 class Products(models.Model):
-    """StoreInfo show as detailed info about each store"""
-    store_id = models.OneToOneField('Stores', primary_key=True, on_delete=models.CASCADE)
+    """Each single product information"""
+    product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255)
     product_price = models.FloatField(max_length=10)
-    product_dis = models.TextField(max_length=400)
-    product_quantity = models.IntegerField()
+    product_type = models.CharField(max_length=255)
+    connected_container_id = models.OneToOneField('ProductContainer', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.product_name
+
+
+class ProductContainer(models.Model):
+    """Each single product information"""
+    container_id = models.AutoField(primary_key=True)
+    store_id = models.OneToOneField('Stores', on_delete=models.CASCADE)
+    container_owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.container_id)

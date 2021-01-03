@@ -61,8 +61,7 @@ class ModelTests(TestCase):
         products = models.Products.objects.create(
             product_name="Cricket Bat",
             product_price=45.90,
-            product_dis="It is a cricket Bat made ny nike",
-            product_quantity=45
+            product_type="cricket accessories"
         )
-
+    
         self.assertEqual(str(products), products.product_name)

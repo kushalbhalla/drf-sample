@@ -5,6 +5,8 @@ from stores import views
 
 router = DefaultRouter()
 router.register('stores', views.StoresViewSet)
+router.register('productContainer', views.ProductContainerViewSet)
+router.register('products', views.ProductsViewSet)
 
 app_name = 'stores'
 
